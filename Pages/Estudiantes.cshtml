@@ -1,0 +1,92 @@
+﻿@page
+@model GestionEstudiantes1.Pages.EstudiantesModel
+@using EstudiantesCore.Dtos
+@using EstudiantesCore.Entidades
+@{
+}
+
+@Html.AntiForgeryToken()
+
+@using DevExtreme.AspNet.Mvc
+
+@(Html.DevExtreme().Form<EstudianteDTO>
+    ()
+    .ID("FormEstudiante")
+    .ColCount(12)
+    .Items(ITEMS=> {
+
+
+        ITEMS.AddSimpleFor(m => m.TipoDocumento).ColSpan(4)
+        .ValidationRules(s => s.AddRequired().Message("El Tipo de documento es requerido"))
+         .Label(d => d.Location(FormLabelLocation.Top).Text("Tipo de Documento"))
+         .Editor(f => f.SelectBox().Placeholder("Seleccione su Tipo de Documento").DisplayExpr("Nombre").DataSource(d => d.Array()
+         .Data(new List<TipoDocumento>() { new TipoDocumento() {Id=1, Code="CC", Nombre= "Cedula Ciudadania"} }).Key("Id")));
+
+        ITEMS.AddSimpleFor(m => m.Documento).ColSpan(4)
+        .Label(f=>f.Location( FormLabelLocation.Top).Text("Documento"))
+        .ValidationRules(v => v.AddRequired().Message("El documento es requerido"))
+        .ValidationRules(f => f.AddNumeric().Message("Solo se permiten campos numericos"))
+        .Editor(s => s.TextBox().Placeholder("63350550").MaxLength(20));
+
+        ITEMS.AddSimpleFor(m => m.Nombre)
+        .ValidationRules(v=>v.AddRequired().Message("El nombre es requerido"))
+        .ValidationRules(q=>q.AddStringLength().Min(4).Max(15).Message("MINIMO 4, MAXIMO 15"))
+        .Label(f=>f.Location( FormLabelLocation.Top)
+        .Text("Nombres")).ColSpan(4)
+        .Editor(d=>d.TextBox().MaxLength(100));
+
+        ITEMS.AddSimpleFor(m => m.Apellido).ColSpan(4)
+        .ValidationRules(v => v.AddRequired().Message("El Apellido es requerido"))
+        .Label(f => f.Location(FormLabelLocation.Top)
+        .Text("Apellidos")).ColSpan(4)
+        .Editor(d => d.TextBox().MaxLength(100));
+
+
+        ITEMS.AddSimpleFor(g => g.Sexo).ColSpan(4)
+        .ValidationRules(s => s.AddRequired().Message("El Sexo es requerido"))
+         .Label(d => d.Location(FormLabelLocation.Top).Text("Sexo"))
+         .Editor(f => f.SelectBox().DataSource(d => d.Array()
+         .Data(new List<string>() { "M","F" })));
+
+        ITEMS.AddSimpleFor(f => f.FechaNacimiento).ColSpan(4)
+        .Label(d => d.Location(FormLabelLocation.Top).Text("Fecha de Nacimiento"))
+        .ValidationRules(s => s.AddRequired().Message("Campo requerido"))
+        .Editor(f => f.DateBox().Max(DateTime.Now).DateSerializationFormat("yyyy-MM-dd").DisplayFormat("yyyy-MM-dd"));
+
+        ITEMS.AddSimpleFor(m => m.Email).ColSpan(4)
+        .Label(f => f.Location(FormLabelLocation.Top).Text("Email"))
+        .ValidationRules(v => v.AddRequired().Message("Campo requerido"))
+        .Editor(d => d.TextBox().MaxLength(200));
+
+        ITEMS.AddSimpleFor(m => m.Telefono).ColSpan(4)
+        .Label(f => f.Location(FormLabelLocation.Top).Text("Telefono"))
+        .ValidationRules(v => v.AddRequired().Message("Campo requerido"))
+        .ValidationRules(g => g.AddNumeric().Message("Ingrese un Numero Telefonico valido"))
+        .Editor(d => d.TextBox().MaxLength(20));
+
+        ITEMS.AddSimpleFor(m => m.Direccion).ColSpan(4)
+        .Label(f => f.Location(FormLabelLocation.Top).Text("Direccion"))
+        .ValidationRules(v => v.AddRequired().Message("Campo requerido"))
+        .Editor(d => d.TextArea().MaxLength(500));
+
+        ITEMS.AddSimpleFor(f => f.FechaIngreso).ColSpan(4)
+        .Label(d => d.Location(FormLabelLocation.Top).Text("Fecha de Ingreso"))
+        .ValidationRules(s => s.AddRequired().Message("Campo requerido"))
+        .Editor(f => f.DateBox().Max(DateTime.Now).DateSerializationFormat("yyyy-MM-dd").DisplayFormat("yyyy-MM-dd"));
+
+        ITEMS.AddEmpty().ColSpan(4);
+
+        ITEMS.AddButton().ColSpan(4).VerticalAlignment(VerticalAlignment.Bottom).ButtonOptions(s => s.Icon("save").Type(ButtonType.Default)
+        .OnClick("Salvar").Text("Guardar"));
+
+    })
+
+    )
+
+@section Scripts
+
+    {
+
+    <script src="~/js/Estudiantes.js"></script>
+
+}

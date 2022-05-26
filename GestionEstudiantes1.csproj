@@ -4,6 +4,9 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Pages\Estudiantes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.23" />
   </ItemGroup>
   <ItemGroup>
@@ -11,5 +14,14 @@
     <ProjectReference Include="..\EstudiantesInfraestructure\EstudiantesInfraestructure.csproj" />
     <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.7" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Estudiantes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Estudiantes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pages\Estudiantes.cshtml" />
   </ItemGroup>
 </Project>
