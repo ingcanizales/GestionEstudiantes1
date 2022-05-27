@@ -6,23 +6,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EstudiantesCore.Dtos;
 using EstudiantesCore.Entidades;
+using EstudiantesCore.Interactores;
 
 namespace GestionEstudiantes1.Pages
 {
     public class EstudiantesModel : PageModel
     {
+        private readonly IMatricula _matricula;
         public void OnGet()
         {
         }
 
-        [HttpPost]
-        public IActionResult OnPostCrearEstudiante(EstudianteDTO estudiante)
+        public EstudiantesModel(IMatricula matricula)
+        {
+            _matricula = matricula;
+        }
+
+       [HttpPost]
+        public IActionResult OnPostCrearEstudiante(Estudiantes estudiante)
         {
 
             try
             {
-                //_matricula.MatricularEstudiante();
-                return StatusCode(200, "Todo quedo bien");
+                bool modeloValido = TryValidateModel(estudiante);
+
+                if (modeloValido)
+                {
+                    _matricula.MatricularEstudiante(estudiante);
+                }
+                else
+                {
+                    return StatusCode(400, "Modelo invalido");
+
+                }
+                
+                
+                return StatusCode(200);
             }
 
             catch (Exception e)
