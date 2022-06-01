@@ -1,15 +1,13 @@
 using EstudiantesCore.Interactores;
+using EstudiantesCore.Interfaces;
+using EstudiantesInfraestructure.Database;
 using EstudiantesInfraestructure.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GestionEstudiantes1
 {
@@ -25,7 +23,9 @@ namespace GestionEstudiantes1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddScoped<IMatricula, Matricula>();
+            services.AddDbContext<AppDbContext>(s => s.UseSqlServer(Configuration.GetConnectionString("Database")));
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
         }
 
